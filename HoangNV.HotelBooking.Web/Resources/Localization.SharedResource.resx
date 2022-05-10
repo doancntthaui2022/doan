@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Quản lý người sử dụng</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="Beds" xml:space="preserve">
+    <value>Loại giường</value>
+  </data>
+  <data name="Booking" xml:space="preserve">
+    <value>Đặt phòng</value>
+  </data>
+  <data name="BookingName" xml:space="preserve">
+    <value>Booking Hotel</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Convenient" xml:space="preserve">
+    <value>Tiện ích</value>
+  </data>
+  <data name="ConvenientType" xml:space="preserve">
+    <value>Loại tiện ích</value>
+  </data>
+  <data name="C_R_001" xml:space="preserve">
+    <value>Xóa bản ghi này có thể dẫn đến việc xóa bản ghi tiện ích? Bạn chắn chắn muốn xóa?</value>
+  </data>
+  <data name="C_R_002" xml:space="preserve">
+    <value>Bạn chắc chắn muốn xóa?</value>
+  </data>
+  <data name="C_R_002_001" xml:space="preserve">
+    <value>Xác nhận đặt phòng?</value>
+  </data>
+  <data name="C_R_002_002" xml:space="preserve">
+    <value>Xác nhận nhận phòng?</value>
+  </data>
+  <data name="C_R_002_003" xml:space="preserve">
+    <value>Xác nhận trả phòng?</value>
+  </data>
+  <data name="C_R_002_004" xml:space="preserve">
+    <value>Xác nhận hủy đặt phòng?</value>
+  </data>
+  <data name="C_R_002_005" xml:space="preserve">
+    <value>Xác nhận hủy nhận phòng?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="E_A002_02" xml:space="preserve">
+    <value>Vui lòng nhập {0}.</value>
+  </data>
+  <data name="E_B_002" xml:space="preserve">
+    <value>Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="E_C_001" xml:space="preserve">
+    <value>Thêm mới không thành công</value>
+  </data>
+  <data name="E_C_002" xml:space="preserve">
+    <value>Đã tồn tại loại tiện ích. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="E_C_002_01" xml:space="preserve">
+    <value>Xóa không thành công. Chỉ được xóa phòng không hoạt động.</value>
+  </data>
+  <data name="E_C_003" xml:space="preserve">
+    <value>Xóa không thành công. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="E_C_004" xml:space="preserve">
+    <value>Cập nhật không thành công. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="E_C_005" xml:space="preserve">
+    <value>Đã tồn tại tiện ích. Vui lòng kiểm tra lại</value>
+  </data>
+  <data name="E_C_008_02" xml:space="preserve">
+    <value>{0} không được vượt quá {1} ký tự.</value>
+  </data>
+  <data name="Header Error Message" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Header Success Message" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="Header Warning Message" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang chủ</value>
+  </data>
+  <data name="HotelBranchs" xml:space="preserve">
+    <value>Chi tiết khách sạn</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Đăng ký đặt</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Phòng</value>
+  </data>
+  <data name="RoomType" xml:space="preserve">
+    <value>Loại phòng</value>
+  </data>
+  <data name="sEmptyTable" xml:space="preserve">
+    <value>Không có dữ liệu.</value>
+  </data>
+  <data name="sFirst" xml:space="preserve">
+    <value>Đầu</value>
+  </data>
+  <data name="sInfo" xml:space="preserve">
+    <value>(Từ _START_ đến _END_ bản ghi trong tổng _TOTAL_ bản ghi)</value>
+  </data>
+  <data name="sInfoEmpty" xml:space="preserve">
+    <value>(Không có bản ghi nào)</value>
+  </data>
+  <data name="sInfoFiltered" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sLast" xml:space="preserve">
+    <value>Cuối</value>
+  </data>
+  <data name="sLengthMenu" xml:space="preserve">
+    <value>Tổng số trang _MENU_</value>
+  </data>
+  <data name="sLoadingRecords" xml:space="preserve">
+    <value>Đang tải...</value>
+  </data>
+  <data name="sNext" xml:space="preserve">
+    <value>Sau</value>
+  </data>
+  <data name="sPrevious" xml:space="preserve">
+    <value>Trước</value>
+  </data>
+  <data name="sProcessing" xml:space="preserve">
+    <value>Đang xử lý...</value>
+  </data>
+  <data name="sSearch" xml:space="preserve">
+    <value>Tìm kiếm:</value>
+  </data>
+  <data name="sZeroRecords" xml:space="preserve">
+    <value>Không có dữ liệu.</value>
+  </data>
+  <data name="S_C_001" xml:space="preserve">
+    <value>Thêm mới thành công</value>
+  </data>
+  <data name="S_C_002" xml:space="preserve">
+    <value>Xóa thành công</value>
+  </data>
+  <data name="S_C_002_001" xml:space="preserve">
+    <value>Xác nhận thành công</value>
+  </data>
+  <data name="S_C_002_002" xml:space="preserve">
+    <value>Nhận phòng thành công</value>
+  </data>
+  <data name="S_C_002_003" xml:space="preserve">
+    <value>Hủy thành công</value>
+  </data>
+  <data name="S_C_003" xml:space="preserve">
+    <value>Cập nhật thành công</value>
+  </data>
+  <data name="S_C_004" xml:space="preserve">
+    <value>Đã thay đổi trạng thái hoặc xóa thành công</value>
+  </data>
+  <data name="S_R_001" xml:space="preserve">
+    <value>Đã thay đổi trạng thái thành công</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="W_B_007_35" xml:space="preserve">
+    <value>Chưa đăng kí phòng. Vui lòng xem lại</value>
+  </data>
+  <data name="W_C_006_01" xml:space="preserve">
+    <value>Đã xảy ra lỗi trong quá trình xử lý.</value>
+  </data>
+  <data name="W_R_001" xml:space="preserve">
+    <value>Không tìm thấy mã phòng</value>
+  </data>
+  <data name="W_R_002" xml:space="preserve">
+    <value>Hiện tại không thể đổi trạng thái phòng</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

@@ -1,0 +1,58 @@
+﻿
+@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@using HoangNV.HotelBooking.Repository.Models
+@using Newtonsoft.Json;
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ var modelHotel = (HotelBranchViewModel)ViewData["HotelBranch"]; }
+
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="titlepage">
+                    <h2>@modelHotel.HotelBranchName</h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cont">
+                    <h3>Thông tin liên hệ</h3>
+                    <p>Địa chỉ: @modelHotel.Address</p>
+                    <p>Số điện thoại: (+84) @modelHotel.PhoneNumber</p>
+                    <p>Email: @modelHotel.Email</p>
+                </div>
+            </div>
+            @*<div class="col-md-6">
+                    <form id="request" class="main_form">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <input class="contactus" placeholder="Full Name" type="text" name="Full Name">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="contactus" placeholder="Email" type="email" name="Email">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="contactus" placeholder="Phone Number" type="tel" name="Phone Number">
+                            </div>
+                            <div class="col-md-12">
+                                <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message </textarea>
+                            </div>
+                            <div class="col-sm-12">
+                                <button class="send_btn">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>*@
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Copyright (C) 2022 HoangNV</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

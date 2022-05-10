@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum; 
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<div class="ui container" style="margin-top:2rem !important">
+    <h3 class="hs-text-red">@Localizer["W_C_006_01"]</h3>
+    <a href="#" onclick="BackPrePage()" class="hs-link-underline">Quay lại</a>
+</div>
+

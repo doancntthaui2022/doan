@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Stylesheets{
+<style>
+    .success-book {
+    margin-top: 10rem;
+    text-align: center;
+}
+    .font-s{
+        font-size: 20px;
+    margin-bottom: 1rem;
+    }
+    .btn-trang{
+            padding: 1rem;
+    color: #060606;
+    background: #77d3ff;
+    border: 1px solid #0067fb;
+    border-radius: 11px;
+    }
+</style>
+}
+<div class="row">
+    <div class="col-5" style="text-align: center;margin-top: 5rem;padding-left: 5rem;">
+        <img src="~/img/success.jpg" />
+    </div>
+    <div class="col-7 success-book">
+        <h1><b>ĐẶT PHÒNG THÀNH CÔNG</b></h1>
+        <div class="col-12 font-s"><b>Cảm ơn quý khách đã tin tưởng lựa chọn khách sạn của chúng tôi!</b></div>
+        <div class="col-12 font-s"><b>Quý khách vui lòng chờ nhân viên gọi điện xác nhận đơn đặt phòng.</b></div>
+        <div class="col-12 font-s"><button class="btn-trang" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");"><b>TRANG CHỦ</b></button></div>
+    </div>
+</div>

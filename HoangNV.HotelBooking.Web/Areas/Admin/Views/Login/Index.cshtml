@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@model HoangNV.HotelBooking.BusinessLogic.Models.UserViewModel;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+@{ ViewBag.Title = "Login"; }
+
+
+<link rel="stylesheet" href="~/css/Login.css" />
+<div class="wrapper">
+    <form class="login" action="@(func.GetPrefixUrlByControllerAction(this.Url,"Index","Login"))" method="post">
+        <p class="title">@Localizer["Login"]</p>
+        <input type="text" asp-for="Username" placeholder="@Localizer["Username"]" autofocus />
+        <i class="fa fa-user"></i>
+        <div>
+            <span asp-validation-for="Username" class="hs-text-red"></span>
+        </div>
+        <input type="password" asp-for="Password" placeholder="@Localizer["Password"]" />
+        <i class="fa fa-key"></i>
+        <div>
+            <span asp-validation-for="Password" class="hs-text-red"></span>
+        </div>
+        <div>
+            @Html.ValidationMessage("user_pasword")
+        </div>
+        <a href="#">@Localizer["ForwardPassword"]</a>
+        <button type="submit">
+            <i class="spinner"></i>
+            <span class="state">@Localizer["Login"]</span>
+        </button>
+    </form>
+</div>
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+
+@section script{
+    <script>
+        var working = false;
+        $('.login').on('submit', function (e) {
+            e.preventDefault();
+            if (working) return;
+            working = true;
+            var $this = $(this),
+                $state = $this.find('button > .state');
+            $this.addClass('loading');
+            $state.html('Authenticating');
+            setTimeout(function () {
+                $this.addClass('ok');
+                $state.html('Welcome back!');
+                setTimeout(function () {
+                    $state.html('Log in');
+                    $this.removeClass('ok loading');
+                    working = false;
+                }, 4000);
+            }, 3000);
+        });
+    </script>
+}

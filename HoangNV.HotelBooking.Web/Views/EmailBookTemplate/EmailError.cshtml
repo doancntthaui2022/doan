@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+@inject Microsoft.Extensions.Configuration.IConfiguration configuration
+@model HoangNV.HotelBooking.Entities.Entities.Booking
+@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@using HoangNV.HotelBooking.Repository.Enum
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+@{ Layout = null;
+
+    var dateInOut = Model.CheckOutTime.Day - Model.CheckInTime.Day + 1;
+    var status = HoangNV.HotelBooking.Web.Utils.Utility.GetEnumDisplay<StatusBookingRoomEnum>(_sharedLocalizer);}
+
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .booking-details {
+            padding: 1rem;
+            margin: 2rem;
+            border: 1px solid #c1c1c1;
+            border-radius: 7px;
+        }
+
+        .bold-size {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-12">
+            <b>Xin chào @Model.Customer.CustomerName</b>
+        </div>
+    </div><label>
+        ===================================================
+    </label>
+    <br />
+    <br />
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-12">
+            <b>Mã đặt phòng:</b> @Model.BookingId
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-4">
+            <b>Số điện thoại:</b> @Model.Customer.PhoneNumber
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-4">
+            <b>Người nhận phòng:</b> @Model.Customer.CheckInPersonName
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-6">
+            <b>CMND người nhận phòng:</b> @Model.Customer.CheckInPersonCode
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-4">
+            <b>Nhận phòng:</b> @Model.CheckInTime.ToString("dd/MM/yyyy")
+            <label name="CheckInTime" value="@Model.CheckInTime"></label>
+        </div>
+
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-4">
+            <b>Trả phòng:</b> @Model.CheckOutTime.ToString("dd/MM/yyyy")
+            <label name="CheckOutTime" value="@Model.CheckOutTime"></label>
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-12">
+            <b>Trạng thái đơn đặt phòng: </b> <span style="background-color: #f6f715;padding-top: 0.2rem;padding-bottom: 0.2rem;padding-left: 1rem;padding-right: 1rem;border-radius: 37px;">Đã hủy</span>
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-12">
+            <b>Tổng tiền: </b> @Model.SumCost.ToString("N0") VNĐ
+        </div>
+    </div>
+    <label>
+        ===================================================
+    </label>
+    <br />
+    <br />
+    <br />
+    <div class="bold-size col-4">
+        <b><i>Nếu bạn có nhu cầu đặt phòng, hãy liên lạc với chung tôi!!!</i></b>
+    </div>
+</body>
+</html>

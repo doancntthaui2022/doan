@@ -1,0 +1,143 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@using HoangNV.HotelBooking.Repository.Enum;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.BusinessLogic.Models.RoomViewModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["Room"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <div class="ui form hs-form">
+        <div class="ui two column stackable grid">
+            <div class="fourteen wide large screen thirteen wide computer twelve wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields change-range">
+                        <div class="three wide large screen three wide computer four wide tablet field column">
+                            <label>
+                                @Localizer["RoomCode"]
+                            </label>
+                        </div>
+                        <div class="thirteen wide large screen field column">
+                            <input id="txtRoomCode" type="text" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row inline fields change-range">
+                        <div class="three wide large screen field column">
+                            <label>
+                                @Localizer["RoomTypeId"]
+                            </label>
+                        </div>
+                        <div class="five wide large screen field column">
+                            <select asp-items="ViewBag.RoomTypes" id="roomTypeId" class="ui search dropdown" name="dropType"></select>
+                        </div>
+                        <div class="three wide large screen field column">
+                            <label>
+                                @Localizer["RoomStatus"]
+                            </label>
+                        </div>
+                        <div class="five wide large screen field column">
+                            <select asp-items="Html.GetEnumSelectList<RoomEnum>()" id="room_status" class="ui search dropdown" name="dropType"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide large screen three wide computer four wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields row-change-range">
+                        <div class="column field hs-b004-btn-search btn-change-range">
+                            <input type="button" id="btnSearch" class="ui yellow button fluid " value="@Localizer["Search"]" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui divider">
+</div>
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+    <div class="ui parent-input">
+
+        <div class="ui stackable menu hs-action-links hs-gray">
+            <a class="a item" id="add-room">
+                <i class="plus square outline icon" aria-hidden="true"></i>
+                @Localizer["AddRoom"]
+            </a>
+        </div>
+    </div>
+
+    <table class="ui celled selectable striped table wh-data-table" id="tableRooms" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["RoomCode"]</th>
+                <th>@Localizer["RoomStatus"]</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@*add modal*@
+<div class="ui small modal hs-booking" id="add-room-modal">
+    <div class="ui grid hs-modal">
+        <div class="row">
+            <h1 class="ui header monsin-title hs-title-result">@Localizer["AddRoom"]</h1>
+        </div>
+        <div class="sixteen wide column">
+            <div id="frmSetting" class="ui form">
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                        <label class="" tabindex="0">
+                            @Localizer["RoomTypeId"]
+                        </label>
+                    </div>
+                    <div class="thirteen wide field">
+                        <select asp-items="ViewBag.RoomTypes" id="roomTypeAddId" class="ui search dropdown" name="dropType"></select>
+
+                    </div>
+                </div>
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                    </div>
+                    <div class="thirteen wide field">
+                        <div class="hs-text-red hs-error hs-error-text" id="txt-RoomTypeId-error"></div>
+                    </div>
+                </div>
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                        <label class="" tabindex="0">
+                            @Localizer["RoomCode"]
+                        </label>
+                    </div>
+                    <div class="thirteen wide field">
+                        <input name="name" style="background-color:aqua" id="txtRoomCodeAdd" readonly autofocus required autocomplete="off" maxlength="50" type="text" messageOf="Name">
+                    </div>
+                </div>
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                    </div>
+                    <div class="thirteen wide field">
+                        <div class="hs-text-red hs-error hs-error-text" id="txt-RoomCode-error"></div>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="hs-buttons">
+                    <a id="btnAdd" class="ui hs-button yellow button">@Localizer["Add"]</a>
+                    <a id="btnCancel" class="ui hs-button yellow button">@Localizer["btn_cancel"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        RoomController.Index.statusEnum = JSON.parse(
+        '@Html.Raw(Json.Serialize(HoangNV.HotelBooking.Web.Utils.Utility.GetEnumDisplay<RoomEnum>(_sharedLocalizer)))');
+        RoomController.Index.urlAction="@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "Room")";
+        RoomController.Index.Init();
+    </script>
+}

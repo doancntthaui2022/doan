@@ -1,0 +1,106 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> localizer
+@{
+    Layout = null;
+}
+<div class="ui tiny modal" id="message-box-modal">
+    <div class="header">
+        <i id="icon" aria-hidden="true"></i> <span id="header-content"></span>
+    </div>
+    <div class="scrolling content" id="message"></div>
+    <div class="actions">
+        <div class="ui cancel yellow  small button">@localizer["OK"]</div>
+    </div>
+</div>
+
+<div id="loading-modal" style="z-index:9999">
+    <div class="hs-background-loading">
+        <div class="hs-content-loading">
+            <div class="hs-loadingio-spinner">
+                <div class="hs-img-loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="hs-txt-loading">@localizer["sProcessing"]</div>
+        </div>
+    </div>
+</div>
+
+<div id="download-loading-modal" style="z-index:9999">
+    <div class="hs-background-loading">
+        <div class="hs-content-loading">
+            <div class="hs-loadingio-spinner">
+                <div class="hs-img-loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="hs-txt-loading">@localizer["GetPreparingPDF"]</div>
+        </div>
+    </div>
+</div>
+
+<div id="loading-search-modal" style="z-index:9999">
+    <div class="hs-background-loading">
+        <div class="hs-content-loading">
+            <div class="hs-loadingio-spinner">
+                <div class="hs-img-loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="hs-txt-loading">@localizer["sProcessing"]</div>
+        </div>
+    </div>
+</div>

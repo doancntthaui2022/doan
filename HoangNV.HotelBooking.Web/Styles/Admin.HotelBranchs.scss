@@ -1,0 +1,65 @@
+﻿.img-add {
+    width: 10rem;
+    height: 10rem;
+    border: 0.1rem solid pink;
+    cursor:pointer;
+}
+#imageUploader{
+    display:none;
+}
+.img-add-hotel{
+    margin-right:2rem
+}
+.img-hotel-branch{
+    display:block !important;
+    align-items:unset !important;
+}
+.img-div{
+    display:inline-block;
+}
+input.remove-image {
+    margin-left: -5em;
+    margin-right: 1rem;
+    margin-top: -6rem;
+}
+.img-container {
+    display: inline-block;
+}
+.number-room-type{width:50%}
+.ui.fluid.simple {
+    margin-top: 1rem;
+}
+
+
+.convenient-type-padding {
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+    background-color:lightgreen;
+}
+.hs-form.ui.form .row.inline.fields {
+    margin: 0  !important;
+}
+
+.ui.table-add-convenient-room thead th {
+    background: #f4ff69;
+    color: #000;
+}
+#dropDownDepartmentSchedule, .padding-calendar {
+    padding: 0 1rem 0 0rem !important;
+}
+.padding-column{
+    padding-top:1rem;
+}
+.padding-button-header {
+    margin-left: 76rem;
+    margin-top: -3rem;
+    margin-bottom: 1rem;
+}
+.hs-hover-pointer-icon{
+    cursor:pointer;
+}
+.ui.menu .hs-header-logo {
+    max-width: 121px;
+    max-height: 96px !important;
+    margin-left: 5rem;
+}

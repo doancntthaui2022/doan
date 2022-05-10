@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.Entities.Entities.ConvenientTypes>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["ConvenientType"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <div class="ui form hs-form">
+        <div class="ui two column stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="two wide field column">
+                    <label>
+                        @Localizer["Search"]
+                    </label>
+                </div>
+                <div class="eleven wide field column">
+                    <input id="txtSearch" type="text" maxlength="50" autocomplete="off" placeholder="@Localizer["ConvenientSearch"]">
+                </div>
+                <div class="three wide field column">
+                    <input type="button" id="btnSearch" class="ui button yellow" value="@Localizer["Search"]" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui divider">
+</div>
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+    <div class="ui stackable menu hs-action-links hs-gray">
+            <a class="a item" id="add-convenient-type">
+                <i class="plus square outline icon" aria-hidden="true"></i>
+                @Localizer["AddConvientType"]
+            </a>
+        </div>
+    <table class="ui celled selectable striped table wh-data-table" id="tableConvenientType" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["ConvenientTypeName"]</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@*add modal*@
+<div class="ui small modal hs-booking" id="setting-modal">
+    <div class="ui grid hs-modal">
+        <div class="row">
+            <h1 class="ui header monsin-title hs-title-result">@Localizer["AddConvientType"]</h1>
+        </div>
+        <div class="sixteen wide column">
+            <div id="frmSetting" class="ui form">
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                        <label class="" tabindex="0">
+                            @Localizer["ConvenientTypeName"]
+                        </label>
+                    </div>
+                    <div class="thirteen wide field">
+                        <input name="id" hidden type="text">
+                        <input name="name" id="txtAddConvenientType" autofocus required autocomplete="off" maxlength="50" type="text" messageOf="Name">
+                        <div class="hs-text-red hs-error hs-error-text" id="txtAddConvenientType-error"></div>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="hs-buttons">
+                    <a id="btnAdd" class="ui hs-button yellow button">@Localizer["Add"]</a>
+                    <a id="btnCancel" class="ui hs-button yellow button">@Localizer["btn_cancel"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*update modal*@
+<div class="ui small modal hs-booking" id="update-modal">
+    <div class="ui grid hs-modal">
+        <div class="row">
+            <h1 class="ui header monsin-title hs-title-result">@Localizer["Update"]</h1>
+        </div>
+        <div class="sixteen wide column">
+            <div id="frmSetting" class="ui form">
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                        <label class="" tabindex="0">
+                            @Localizer["OldConvenientType"]
+                        </label>
+                    </div>
+                    <div class="thirteen wide field">
+                        <input name="id" hidden type="text">
+                        <input name="name" id="oldConvenientName" required readonly autocomplete="off" maxlength="50" type="text" messageOf="Name">
+                    </div>
+                </div>
+                <div class="fields sch-form-inline-fields">
+                    <div class="field hs-form-label">
+                        <label class="" tabindex="0">
+                            @Localizer["NewConvenientType"]
+                        </label>
+                    </div>
+                    <div class="thirteen wide field">
+                        <input name="id" hidden type="text">
+                        <input name="name" id="newConvenientName" autofocus required autocomplete="off" maxlength="50" type="text" messageOf="Name">
+                        <div class="hs-text-red hs-error hs-error-text" id="txtUpdateConvenientType-error"></div>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="hs-buttons">
+                    <a id="btnUpdate" class="ui hs-button yellow button">@Localizer["Update"]</a>
+                    <a id="btnCancel1" class="ui hs-button yellow button">@Localizer["btn_cancel"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        ConvenientTypeController.Index.urlAction="@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "ConvenientTypes")";
+        ConvenientTypeController.Index.Init();
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.Web.Models
+@using Microsoft.AspNetCore.Http.Extensions
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> localizer
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/apple-icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        @localizer["BookingName"]
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!-- CSS Files -->
+    <link href="~/css/Header.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/semantic/semantic.min.css")" />
+    <link href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/Semantic-UI-Calendar/dist/calendar.min.css")" rel="stylesheet" />
+    <link rel="stylesheet" href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/DataTables/css/jquery.dataTables.min.css")" />
+    <link rel="stylesheet" href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/DataTables/css/dataTables.semanticui.min.css")" />
+    <link rel="stylesheet" href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/Toastr/css/toastr.min.css")" />
+    @RenderSection("Stylesheets", required: false)
+    <link rel="stylesheet" href="@func.GetPrefixUrlByStaticUrl(this.Url,"~/css/site.min.css")" />
+
+</head>
+
+<body>
+    <header>
+        <partial name="_PageHeader.cshtml" />
+    </header>
+
+    <div class="hs-content-container">
+        <partial name="_LeftMenu.cshtml" />
+        <div class="hs-content">
+            <div class="pusher">
+                <div class="main-content hs-main-content">
+                    <div id="popups" style="position:absolute;top:0;bottom:0;left:0;right:0;pointer-events: none;"></div> @*For popups*@
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <partial name="_PageFooter.cshtml" />
+    </footer>
+    @*confirm modal*@
+    <partial name="_ConfirmDialogPartial.cshtml" />
+
+    @*MessageBox modal*@
+    <partial name="_MessageBoxPartial.cshtml" />
+
+    <div id="prefix" data-prefix="@(func.GetPrefix(this.Url))"></div>
+
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/jquery/dist/jquery.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/semantic/semantic.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/Toastr/js/toastr.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/Semantic-UI-Calendar/dist/calendar.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/DataTables/js/jquery.dataTables.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/lib/DataTables/js/dataTables.semanticui.min.js")"></script>
+    <script src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/js/site.min.js")" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1"></script>
+    <script>
+        $(document).ready(function () {
+            $("#toggleButton").bind("click", toggle);
+            $("#footer-system-name").text($("#header-system-name").text());
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

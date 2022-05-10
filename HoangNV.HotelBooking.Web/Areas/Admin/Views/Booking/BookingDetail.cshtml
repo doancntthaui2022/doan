@@ -1,0 +1,219 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.BookingDetailViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Thêm mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var selectListItems = JsonSerializer.Serialize(ViewBag.RoomTypes); }
+
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["AddBooking"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <form class="ui form hs-form" enctype="multipart/form-data">
+        <div class="ui stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="ui fluid simple">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <label class="hs-label-page-header">
+                            @Localizer["BookingRooms"]
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row inline fields">
+            </div>
+            <div class="row inline fields">
+            </div>
+        </div>
+        <div class="row inline fields change-range">
+
+            <div class="four wide field column">
+                <label>
+                    @Localizer["checkInDate"]
+                </label>
+            </div>
+            <div class="four wide column field padding-calendar">
+                <div class="ui calendar" id="startDateCalendar">
+                    <div class="ui input right icon calendar-expand">
+                        <input type="text" autocomplete="off" value="@DateTime.Today" id="startDate">
+                        <i class="calendar icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide field column">
+                <label style="margin:auto">
+                    ~
+                </label>
+            </div>
+            <div class="four field wide column">
+                <div class="ui calendar" id="endDateCalendar">
+                    <div class="ui input right icon calendar-expand">
+                        <input type="text" autocomplete="off" value="@DateTime.Today" id="endDate">
+                        <i class="calendar icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide column field" style="padding-left: 0px;">
+                <button type="button" id="btnSearch" class="ui hs-button hs-table-booking button"  onclick="BookingRoomController.Detail.clearDepartments(@selectListItems)">@Localizer["Search"]</button>
+            </div>
+        </div>
+        <div class="row inline fields">
+            <div class="four wide field column">
+                <label asp-for="RoomTypeId">
+                    @Localizer[@Html.DisplayNameFor(model => model.RoomTypeId)] <span class="hs-text-red">*</span>
+                </label>
+            </div>
+            <div class="ten wide column field" id="dropDownDepartmentSchedule">
+                <select id="roomTypes" class="ui dropdown fluid search selection" messageOf="departmentId" asp-items="ViewBag.RoomTypes" multiple="multiple"></select>
+            </div>
+            <div class="two wide column field" style="padding-left: 0px;">
+                <button type="button" id="btnAddRoomType" class="ui hs-button hs-table-booking button">@Localizer["AddRoomType"]</button>
+            </div>
+        </div>
+
+        <div class="row inline fields  padding-column">
+            <div class="four wide field column">
+                <div class="field hs-form-label">
+                    <label class="sch-form-field-label"></label>
+                </div>
+            </div>
+            <div class="twelve wide field hs-table-booking hs-department-table">
+                <table class="ui celled stackable table" id="room-type-table" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="50%">@Localizer["RoomTypeId"]</th>
+                            <th width="35%">@Localizer["NumberOfRoomType"]</th>
+                            <th><i onclick="BookingRoomController.Detail.clearDepartments(@selectListItems)" class="trash alternate icon"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row inline fields padding-column">
+            <div class="four wide field column">
+                <label asp-for="CostSum">
+                    @Localizer[@Html.DisplayNameFor(model => model.CostSum)]
+                </label>
+            </div>
+            <div class="ten wide field column padding-calendar">
+                <input asp-for="CostSum" disabled style="background-color: #feee7d;" maxlength="50" type="text" autocomplete="off">
+            </div>
+            <div class="two wide column field" style="padding-left: 0px;">
+                <button type="button" id="btnSum" class="ui hs-button pink button">@Localizer["Sum"]</button>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="ui stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="ui fluid simple">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <label class="hs-label-page-header">
+                            @Localizer["Customer"]
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row inline fields">
+            </div>
+            <div class="row inline fields">
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CustomerName">
+                        @Localizer[@Html.DisplayNameFor(model => model.CustomerName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CustomerName" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CustomerName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="PhoneNumber">
+                        @Localizer[@Html.DisplayNameFor(model => model.PhoneNumber)] <span class="hs-text-red"></span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="PhoneNumber" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-PhoneNumber-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="Email">
+                        @Localizer[@Html.DisplayNameFor(model => model.Email)] <span class="hs-text-red"></span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="Email" class="num-of-bed" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model=>model.Email,"",new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Email-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CheckInPersonName">
+                        @Localizer[@Html.DisplayNameFor(model => model.CheckInPersonName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CheckInPersonName" class="num-of-bed" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonName, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CheckInPersonCode">
+                        @Localizer[@Html.DisplayNameFor(model => model.CheckInPersonCode)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CheckInPersonCode" class="num-of-bed" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonCode, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonCode-error"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ui divider"></div>
+        <div class="hs-buttons">
+            <input type="button" id="btnSubmit" class="ui pink button hs-button" value="@Localizer["Add"]" />
+            <a id="btnCancel" class="ui pink button hs-button">@Localizer["btn_cancel"]</a>
+        </div>
+    </form>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        BookingRoomController.Detail.Init();
+    </script>
+}
+
+

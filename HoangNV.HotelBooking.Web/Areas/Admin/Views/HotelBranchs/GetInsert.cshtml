@@ -1,0 +1,109 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.HotelBranchViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Thêm mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["AddHotelBranchs"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <form class="ui form hs-form" enctype="multipart/form-data" >
+        <div class="ui stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="HotelBranchCode">
+                        @Localizer[@Html.DisplayNameFor(model => model.HotelBranchCode)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="HotelBranchCode" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-HotelBranchCode-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="HotelBranchName">
+                        @Localizer[@Html.DisplayNameFor(model => model.HotelBranchName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="HotelBranchName" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-HotelBranchName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Address">
+                        @Localizer[@Html.DisplayNameFor(model => model.Address)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="Address" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Address-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Description">
+                        @Localizer[@Html.DisplayNameFor(model => model.Description)]
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <textarea asp-for="Description" name="Description" maxlength="200"></textarea>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="ten wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Description-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="ImageLinks">
+                        @Localizer[@Html.DisplayNameFor(model => model.ImageLinks)]
+                    </label>
+                </div>
+                <div class="thirteen wide field column img-hotel-branch">
+                    <div class="img-div">
+                        <img class="img-add" id="imgAdder" src="@func.GetPrefixUrlByStaticUrl(this.Url, "~/img/img-add.jpg")" />
+                    </div>
+                    <input type="file" name="imageUploader" value="" multiple id="imageUploader">
+                    <div id="imgViewer">
+
+                    </div>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="ten wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Description-error"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ui divider"></div>
+        <div class="hs-buttons">
+            <input type="button" id="btnSubmit" class="ui pink button hs-button" value="@Localizer["Add"]" />
+            <a id="btnCancel" class="ui pink button hs-button">@Localizer["btn_cancel"]</a>
+        </div>
+    </form>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        HotelBranchsController.Insert.Init();
+    </script>
+}
+
+

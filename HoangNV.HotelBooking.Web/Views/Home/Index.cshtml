@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.HotelBranchViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@section Stylesheets{
+<style>
+    .header {
+        position: absolute;
+    }
+</style>
+}
+
+<section class="banner_main">
+</section>
+<section>
+    <partial name="~/Views/Shared/_sectionLayout.cshtml" />
+</section>
+<div id="about" class="about">
+    <partial name="~/Views/Shared/_aboutLayout.cshtml" model="@Model" />
+</div>
+
+<div class="testimonial">
+    <partial name="~/Views/Shared/_testimonialLayout.cshtml" view-data="ViewData" />
+</div>
+
+@section Scripts{
+    <script>
+        $("#start_date").calendar({
+            type: 'date',
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate() + '';
+                    if (day.length < 2) {
+                        day = '0' + day;
+                    }
+                    var month = (date.getMonth() + 1) + '';
+                    if (month.length < 2) {
+                        month = '0' + month;
+                    }
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            className: {
+                table: 'ui celled center aligned unstackable table',
+            },
+            text: {
+                days: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                monthsShort: ['Th.1', 'Th.2', 'Th.3', 'Th.4', 'Th.5', 'Th.6', 'Th.7', 'Th.8', 'Th.9', 'Th.10', 'Th.11', 'Th.12'],
+                today: 'Hôm nay',
+                now: 'Hiện tại',
+            },
+            firstDayOfWeek:1,
+            endCalendar: $('#end_date'),
+            minDate: new Date(),
+        });
+        $("#end_date").calendar({
+            type: 'date',
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate() + '';
+                    if (day.length < 2) {
+                        day = '0' + day;
+                    }
+                    var month = (date.getMonth() + 1) + '';
+                    if (month.length < 2) {
+                        month = '0' + month;
+                    }
+                    var year = date.getFullYear();
+                    return day + '/' + month + '/' + year;
+                }
+            },
+            text: {
+                days: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                monthsShort: ['Th.1', 'Th.2', 'Th.3', 'Th.4', 'Th.5', 'Th.6', 'Th.7', 'Th.8', 'Th.9', 'Th.10', 'Th.11', 'Th.12'],
+                today: 'Hôm nay',
+                now: 'Hiện tại',
+            },
+            className: {
+                table: 'ui celled center aligned unstackable table',
+            },
+            startCalendar: $('#start_date'),
+            firstDayOfWeek: 1,
+            minDate: new Date(),
+        });
+        var myCarousel = document.querySelector('#myCarousel')
+        var carousel = new bootstrap.Carousel(myCarousel, {
+            interval: 2000,
+            wrap: false
+        })
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@using HoangNV.HotelBooking.Repository.Enum;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.BusinessLogic.Models.BookingConfirmViewModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["Booking-status"]</h1>
+<div class="padding-button-header">
+    <button class="ui mini button blue left" id="btn-pre-page">
+            <i class="angle left large icon"></i>
+        </button>
+    <button class="ui mini button blue right" id="btn-next-page">
+        <i class="angle right large icon"></i>
+    </button>
+</div>
+
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+
+    <table class="ui celled selectable striped table wh-data-table" id="tableConfirmBooking" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["BookingId"]</th>
+                <th>@Localizer["CustomerName"]</th>
+                <th>@Localizer["PhoneNumber"]</th>
+                <th>@Localizer["CheckInTime"]</th>
+                <th>@Localizer["CheckOutTime"]</th>
+                <th>@Localizer["Details"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ToList())
+            {
+                <tr>
+                    <td>@item.BookingId</td>
+                    <td>@item.CustomerName</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.CheckInTime.ToString("dd/MM/yyyy")</td>
+                    <td>@item.CheckOutTime.ToString("dd/MM/yyyy")</td>
+                    <td class="hs-overflow-ellipsis dt-body-center" name="booking-details" onclick="location.href='@Url.Action("CheckingDetail", "Booking",new { @id=item.BookingId})'">
+                        <div class="ui icon hs-hover-pointer-icon" style="text-align:center"><i class="address book icon"></i></div>
+                    </td>
+                </tr>
+            }
+            @if (Model.ToList().Count == 0)
+            {
+                <tr>
+                    <td style="text-align:center" colspan="6">
+                        <lable>Không có dữ liệu</lable>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        $("#btn-pre-page").on('click', function () {
+            RedirectToPage("/Admin/Booking")
+        })
+        $("#btn-next-page").on('click', function () {
+            RedirectToPage("/Admin/Booking/ConfirmBooked")
+        })
+
+    </script>
+}

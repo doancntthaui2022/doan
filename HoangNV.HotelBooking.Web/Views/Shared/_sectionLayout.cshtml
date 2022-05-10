@@ -1,0 +1,35 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form_book" action="/Booking" method="get">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="date">Ngày nhận</label>
+                        <div class="ui calendar" id="start_date" >
+                            <div class="ui input right icon">
+                                <i class="calendar icon"></i>
+                                <input class="book_n" type="text" name="startDate" value="@DateTime.Today" placeholder="dd/MM/yyyy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="date">Ngày trả</label>
+                        <div class="ui calendar" id="end_date">
+                            <div class="ui input right icon calendar-expand">
+                                <i class="calendar icon"></i>
+                                <input class="book_n" type="text" name="endDate" value="@DateTime.Today" placeholder="dd/MM/yyyy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="date">Số người</label>
+                        <input class="book_n" min="0" maxlength="5" name="numOfPer" placeholder="0" type="number">
+                    </div>
+                    <div class="col-md-3">
+                        <button class="book_btn">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

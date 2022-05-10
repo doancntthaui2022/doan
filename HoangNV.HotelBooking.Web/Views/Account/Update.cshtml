@@ -1,0 +1,126 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.UserUpdateViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string error = ViewData["error"] as string;
+    string success = ViewData["success"] as string;}
+
+<div class="container"  style="display: block;height: 54em;">
+    <div class="row">
+        <div class="col-md-6">
+            <form id="ActionRegister" action="" method="post" class="main_form_4">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <h1 style="text-align: center; color: aliceblue;">Thông tin tài khoản</h1>
+                        <input asp-for="UserId" maxlength="50" style="display:none" type="text" autocomplete="off">
+                    </div>
+                    <div class="col-md-12 input-botoom">
+                        <input class="contactus" placeholder="Tên đăng nhập" type="text" asp-for="UserName" readonly style="background-color: aqua;" maxlength="50">
+                        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "" })
+                        <span class="hs-text-red hs-error hs-error-text" id="txt-UserName-error"></span>
+                    </div>
+                    <div class="col-md-12  input-botoom">
+                        <input class="contactus" asp-for="FullName" maxlength="50" type="text" autocomplete="off" placeholder="Họ tên">
+                        @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "" })
+                        <span class="hs-text-red hs-error hs-error-text" id="txt-FullName-error"></span>
+                    </div>
+                    <div class="col-md-12  input-botoom">
+                        <input class="contactus" asp-for="Email" placeholder="Email" type="email" name="Email">
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "" })
+                        <span class="hs-text-red hs-error hs-error-text" id="txt-Email-error"></span>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <div class="col-md-12  input-botoom">
+                            @error
+                        </div>
+                    }
+                    else if(!string.IsNullOrEmpty(success))
+                    {
+                        <div class="col-md-12  input-botoom success-error">
+                            @success
+                        </div>
+                        
+                    }
+
+                    <div class="col-sm-12  input-botoom">
+                        <button class="send_btn" id="btn_submit">Cập nhật</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div id="myCarousel-2" class="main_form_2 carousel slide testimonial_Carousel " data-ride="carousel">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item  active">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <img src="~/img/image_662.jpg" alt="#" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item  ">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <img src="~/img/image_668.jpg" alt="#" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <img src="~/img/deluna_n.jpg" alt="#" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item  ">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <img src="~/img/image_751.jpg" alt="#" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <img src="~/img/image_690.jpg" alt="#" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#myCarousel-2" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel-2" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        @if(!string.IsNullOrEmpty(@success))
+                    {
+                        @:alert("Cập nhật thành công");
+                        
+                    }
+    var myCarousel_2 = document.querySelector('#myCarousel-2')
+        var carousel = new bootstrap.Carousel(myCarousel_2, {
+            interval: 1500,
+            wrap: false
+        })</script>
+}

@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.Entities.Entities
+@using HoangNV.HotelBooking.Repository.Models
+@using Newtonsoft.Json;
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ var convenientTypes = (IEnumerable<ConvenientTypes>)ViewData["ConvenientTypes"];
+    var convenients = (IEnumerable<ConvenientQueryModel>)ViewData["Convenients"]; }
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="titlepage">
+                <h2>Tiện ích</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-2">
+        @foreach (var item in convenientTypes)
+        {
+    <div class="col-md-4 h-100">
+        <div class="content m-3">
+            <h3><i class="bi bi-shop padding-right"></i>@item.ConvenientTypeName</h3>
+            @foreach (var convenient in convenients)
+            {
+                if (convenient.ConvenientTypeId == item.ConvenientTypeId)
+                {
+    <div class="col-md-12">
+        <div class="content m-3">
+            <i class="bi bi-check2 padding-right"></i><span>@convenient.ConvenientName</span>
+        </div>
+    </div>}
+}
+        </div>
+    </div>}
+    </div>
+    </div>

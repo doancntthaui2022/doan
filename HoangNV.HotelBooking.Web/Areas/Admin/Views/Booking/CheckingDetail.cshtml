@@ -1,0 +1,308 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@using HoangNV.HotelBooking.Repository.Enum;
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.BookingConfirmViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Thêm mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+@section Stylesheets{
+    <style>
+        .ui.search.dropdown.selection.disabled {
+            background-color: #fff00069;
+        }
+    </style>
+}
+
+@if (Model.StatusBooking == 1)
+{
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["Booking-check"]</h1>}
+else if (Model.StatusBooking == 2)
+{
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["Booking-check-2"]</h1> }
+else if (Model.StatusBooking == 3)
+{
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["Booking-check-3"]</h1> }
+            else
+            {
+                <h1 class="ui header monsin-title hs-title-booking">@Localizer["Booking-check-4"]</h1>
+            }
+<div class="ui segment hs-gray fix-margin-segment">
+    <form class="ui form hs-form" enctype="multipart/form-data">
+        <div class="ui stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="BookingId">
+                        @Localizer[@Html.DisplayNameFor(model => model.BookingId)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="BookingId" value="@Model.BookingId" style="background-color: #fff00069;" readonly maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CustomerName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields change-range">
+                <div class="four wide field column">
+                    <label>
+                        @Localizer["checkInDate"]
+                    </label>
+                </div>
+                <div class="five wide column field">
+                    <div class="ui calendar" id="startDateCalendar">
+                        <div class="ui input right icon calendar-expand">
+                            <input type="text" autocomplete="off" value="@Model.CheckInTime.ToString("dd/MM/yyyy")" style="background-color: #fff00069;" readonly id="startDate">
+                            <i class="calendar icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="two wide field column">
+                    <label style="margin:auto">
+                        ~
+                    </label>
+                </div>
+                <div class="five field wide column">
+                    <div class="ui calendar" id="endDateCalendar">
+                        <div class="ui input right icon calendar-expand">
+                            <input type="text" autocomplete="off" value="@Model.CheckOutTime.ToString("dd/MM/yyyy")" style="background-color: #fff00069;" readonly id="endDate">
+                            <i class="calendar icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CustomerName">
+                        @Localizer[@Html.DisplayNameFor(model => model.CustomerName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CustomerName" maxlength="50" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CustomerName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="PhoneNumber">
+                        @Localizer[@Html.DisplayNameFor(model => model.PhoneNumber)] <span class="hs-text-red"></span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="PhoneNumber" maxlength="50" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-PhoneNumber-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="Email">
+                        @Localizer[@Html.DisplayNameFor(model => model.Email)] <span class="hs-text-red"></span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="Email" class="num-of-bed" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model=>model.Email,"",new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Email-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CheckInPersonName">
+                        @Localizer[@Html.DisplayNameFor(model => model.CheckInPersonName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CheckInPersonName" class="num-of-bed" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonName, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="CheckInPersonCode">
+                        @Localizer[@Html.DisplayNameFor(model => model.CheckInPersonCode)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="CheckInPersonCode" class="num-of-bed" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonCode, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonCode-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="SumCost">
+                        @Localizer[@Html.DisplayNameFor(model => model.SumCost)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    <input asp-for="SumCost" class="num-of-bed" type="text" readonly style="background-color: #fff00069;" autocomplete="off">
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonCode, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonCode-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="StatusBooking">
+                        @Localizer[@Html.DisplayNameFor(model => model.StatusBooking)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide field column">
+                    @Html.DropDownListFor(x => x.StatusBooking, Html.GetEnumSelectList<StatusBookingRoomEnum>(), new { @class = "ui search dropdown", disabled = "disabled", style = "background-color: #fff00069;" })
+                    @*<input asp-for="StatusBooking" class="num-of-bed" type="text" readonly style="background-color: #fff00069;" autocomplete="off">*@
+                    @*<select asp-items="Html.GetEnumSelectList<StatusBookingRoomEnum>()" id="room_status" disabled="disabled"  class="ui search dropdown" name="dropType">
+                        </select>*@
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonCode, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonCode-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="four wide field column">
+                    <label asp-for="RoomCode">
+                        @Localizer[@Html.DisplayNameFor(model => model.RoomCode)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="twelve wide">
+                    @foreach (var item in Model.RoomCode)
+                    {
+        <ul>
+            <li>@item</li>
+        </ul>}
+                </div>
+                <div class="four wide field column"></div>
+                <div class="twelve wide field column">
+                    @*@Html.ValidationMessageFor(model => model.CheckInPersonCode, "", new { @class = "hs-text-red hs-error hs-error-text" })*@
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-CheckInPersonCode-error"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ui divider"></div>
+        <div class="hs-buttons">
+            @if (Model.StatusBooking == 1)
+            {
+        <input type="button" id="btnSubmit" class="ui pink button hs-button" value="@Localizer["Add"]" />
+                        <a id="btnCancel" class="ui pink button hs-button">@Localizer["btn_cancel"]</a>
+                                        <a id="btnRecancel" class="ui pink button hs-button">@Localizer["cancel"]</a>}
+                                    else if (Model.StatusBooking == 2)
+                                    {
+                        <input type="button" id="btnSubmit-2" class="ui pink button hs-button" value="@Localizer["ConfirmBookedStatus"]" />
+                                        <a id="btnCancel-2" class="ui pink button hs-button">@Localizer["btn_cancel-2"]</a>
+                                                        <a id="btnRecancel-2" class="ui pink button hs-button">@Localizer["cancel"]</a>}
+                                                    else if (Model.StatusBooking == 3)
+                                                    {<input type="button" id="btnSubmit-3" class="ui pink button hs-button" value="@Localizer["ConfirmBookedStatus"]" />
+                                                                        <a id="btnRecancel-3" class="ui pink button hs-button">@Localizer["cancel"]</a> }
+                                                                                    else
+                                                                                    {
+                                                                                        <a id="btnRecancel-4" class="ui pink button hs-button">@Localizer["cancel"]</a>
+                                                                                    }
+
+        </div>
+    </form>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        $("#btnRecancel").on('click', function () {
+            RedirectToPage("/Admin/Booking/ConfirmBooking")
+        });
+        $("#btnRecancel-2").on('click', function () {
+            RedirectToPage("/Admin/Booking/ConfirmBooked")
+        });
+        $("#btnRecancel-3").on('click', function () {
+            RedirectToPage("/Admin/Booking/ConfirmChecked")
+        });
+        $("#btnRecancel-4").on('click', function () {
+            RedirectToPage("/Admin/Booking/ExitDetail")
+        });
+        $("#btnCancel").on('click', function () {
+            var data = new FormData();
+            data.append("id", $("#BookingId").val())
+            ShowDialog(CreateConfirmMessage(`${Resources["C_R_002_004"]}`, DIALOG_MESSAGE_TYPE.WARNING), () => {
+                CallAction("/Admin/Booking/Remove", "POST", data, function (response) {
+                    ShowDialog(response.message, () => {
+                        RedirectToPage("/Admin/Booking/ConfirmBooking")
+                    })
+                })
+            })
+        });
+        $("#btnCancel-2").on('click', function () {
+            var data = new FormData();
+            data.append("id", $("#BookingId").val())
+            ShowDialog(CreateConfirmMessage(`${Resources["C_R_002_005"]}`, DIALOG_MESSAGE_TYPE.WARNING), () => {
+                CallAction("/Admin/Booking/Remove", "POST", data, function (response) {
+                    ShowDialog(response.message, () => {
+                        RedirectToPage("/Admin/Booking/ConfirmBooked")
+                    })
+                })
+            })
+        });
+        $("#btnSubmit").on('click', function () {
+            var data = new FormData();
+            data.append("id", $("#BookingId").val())
+            ShowDialog(CreateConfirmMessage(`${Resources["C_R_002_001"]}`, DIALOG_MESSAGE_TYPE.SUCCESS), () => {
+                CallAction("/Admin/Booking/Checking", "POST", data, function (response) {
+                    ShowDialog(response.message, () => {
+                        RedirectToPage("/Admin/Booking/ConfirmBooking")
+                    })
+                })
+            })
+        });
+        $("#btnSubmit-2").on('click', function () {
+            var data = new FormData();
+            data.append("id", $("#BookingId").val())
+            console.log($("#BookingId").val())
+            ShowDialog(CreateConfirmMessage(`${Resources["C_R_002_002"]}`, DIALOG_MESSAGE_TYPE.SUCCESS), () => {
+                CallAction("/Admin/Booking/BookedConfirm", "POST", data, function (response) {
+                    ShowDialog(response.message, () => {
+                        RedirectToPage("/Admin/Booking/ConfirmBooked")
+                    })
+                })
+            })
+        });
+        $("#btnSubmit-3").on('click', function () {
+            var data = new FormData();
+            data.append("id", $("#BookingId").val())
+            console.log($("#BookingId").val())
+            ShowDialog(CreateConfirmMessage(`${Resources["C_R_002_003"]}`, DIALOG_MESSAGE_TYPE.SUCCESS), () => {
+                CallAction("/Admin/Booking/CheckedConfirm", "POST", data, function (response) {
+                    ShowDialog(response.message, () => {
+                        RedirectToPage("/Admin/Booking/ConfirmChecked")
+                    })
+                })
+            })
+        });
+        console.log(parseInt($("#SumCost").val()).toLocaleString())
+        $("#SumCost").val(parseInt($("#SumCost").val()).toLocaleString());
+    </script>
+}
+
+

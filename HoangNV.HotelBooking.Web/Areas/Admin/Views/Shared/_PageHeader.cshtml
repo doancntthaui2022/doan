@@ -1,0 +1,64 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> localizer
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{ var userName = HttpContextAccessor.HttpContext.Session.GetString("user_full_name"); }
+@section Stylesheets{
+    <link href="~/css/Header.css" rel="stylesheet" />
+}
+<div class="ui grid inverted borderless hs-header-None menu hs-user-info attached top" style="background-color: #aad0ff ">
+    <div class="twelve wide column left floated">
+        <div class="ui hs-sidebar-WebResult inverted borderless menu" style="background-color: #aad0ff ">
+            <a href="#" class="sidebar-menu-toggler" onclick="toggle()">
+                <div class="icon">
+                    <i class="sidebar icon" aria-hidden="true"></i>
+                </div>
+            </a>
+            <div class="item hs-img-logo">
+                <a href="@func.GetPrefixUrlByUrl(this.Url,"/")">
+                    <img src="@func.GetPrefixUrlByStaticUrl(this.Url,"~/img/logo3.png")" class="ui image hs-header-logo" alt="Company's logo">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="three wide column computer only" style="background-color: #aad0ff ">
+
+        <div class="sixteen wide column right floated" style="background-color: #aad0ff ">
+            <div class="ui hs-sidebar-WebResult inverted borderless menu" style="background-color: #aad0ff ">
+                <div class="ui inverted borderless menu" style="background-color: #aad0ff ">
+                    <div class="item right">
+                        <div class="ui one column grid hs-header-user-name" style="background-color: #aad0ff ">
+                            <div class="column large screen only column">
+                                <div class="dropdown-header-layout">
+                                    <h4 class="ui inverted header dropbtn-header-layout" style="cursor:pointer">
+                                        Xin chào @userName
+                                    </h4>
+                                    <div class="dropdown-content-header-layout">
+                                        <a href="/Admin/Account/Detail">Thông tin cá nhân</a>
+                                        <a href="/Admin/Account/UpdatePassWord">Đổi mật khẩu</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="one wide column computer only">
+
+        <div class="six wide column right floated">
+            <form id="frm-logout" method="post" action="/admin/login/logout">
+                <button class="link item right hs-header-logout">
+                    <i class="sign out large icon" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    </script>
+}

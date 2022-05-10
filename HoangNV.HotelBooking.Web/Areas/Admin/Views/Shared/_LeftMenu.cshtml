@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.Web.Models
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> localizer
+
+@{ var userRole = HttpContextAccessor.HttpContext.Session.GetString("user_role");
+    var sideBar = new List<ItemMenu>();
+    sideBar.Add(new ItemMenu { NameController = "Home", NameAction = "Index", StringName = localizer["Home"], IconName = "home icon" });
+    if (userRole == "Employee")
+    {
+
+        sideBar.Add(new ItemMenu { NameController = "HotelBranchs", NameAction = "GetUpdate", StringName = localizer["HotelBranchs"], IconName = "home icon" });
+        sideBar.Add(new ItemMenu { NameController = "Booking", NameAction = "Index", StringName = localizer["Booking"], IconName = "home icon" });
+        sideBar.Add(new ItemMenu { NameController = "RoomType", NameAction = "Index", StringName = localizer["RoomType"], IconName = "home icon" });
+        sideBar.Add(new ItemMenu { NameController = "Room", NameAction = "Index", StringName = localizer["Room"], IconName = "home icon" });
+        sideBar.Add(new ItemMenu { NameController = "Beds", NameAction = "Index", StringName = localizer["Beds"], IconName = "home icon" });
+        sideBar.Add(new ItemMenu { NameController = "ConvenientTypes", NameAction = "Index", StringName = localizer["ConvenientType"], IconName = "tv icon" });
+        sideBar.Add(new ItemMenu { NameController = "Convenients", NameAction = "Index", StringName = localizer["Convenient"], IconName = "wechat  icon" });
+    }
+    else
+    {
+        sideBar.Add(new ItemMenu { NameController = "Account", NameAction = "Index", StringName = localizer["Account"], IconName = "wechat  icon" });
+    }
+    var controller = @ViewContext.RouteData.Values["controller"].ToString();
+    var action = @ViewContext.RouteData.Values["action"].ToString(); }
+
+
+
+<div class="hs-sidebar-container">
+    <div class="ui hs-sidebar-WebResult left inverted vertical menu hs-sidebar">
+        <div class="item">
+            <div class="header"></div>
+            <div class="menu">
+                @foreach (var item in sideBar)
+                {
+    <div>
+        @if (item.NameController == controller && item.NameAction == action)
+        {
+<a href="@func.GetPrefixUrlByControllerAction(this.Url,item.NameAction,item.NameController)"
+   class="item active">@item.StringName</a> }
+else
+{
+<a href="@func.GetPrefixUrlByControllerAction(this.Url,item.NameAction,item.NameController)"
+   class="item ">@item.StringName</a>}
+    </div>}
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,274 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.Entities.Entities
+@using HoangNV.HotelBooking.Repository.Models
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.RoomTypeUpdteVM
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+@section Stylesheets{
+    <link href="~/lib/css/bootstrap.css" rel="stylesheet" />
+}
+@{ ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    IEnumerable<ConvenientTypes> convenientTypes = ViewBag.ConvenientTypes;
+    IEnumerable<ConvenientQueryModel> convenients = ViewBag.Convenients;
+    IEnumerable<BedQueryModel> beds = ViewBag.Beds; }
+
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["UpdateRoomType"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <form class="ui form hs-form" enctype="multipart/form-data">
+
+        <div class="ui stackable grid padding-row-inline">
+            <div class="row inline fields">
+                <div class="ui fluid simple">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <label class="hs-label-page-header">
+                            @Localizer["Basic"]
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <input asp-for="RoomTypeId" style="display:none" value="@Model.RoomTypeId" maxlength="50" type="text" autocomplete="off">
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="RoomTypeCode">
+                        @Localizer[@Html.DisplayNameFor(model => model.RoomTypeCode)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="RoomTypeCode" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-RoomTypeCode-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="RoomTypeName">
+                        @Localizer[@Html.DisplayNameFor(model => model.RoomTypeName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="RoomTypeName" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-RoomTypeName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="NumOfRoom">
+                        @Localizer[@Html.DisplayNameFor(model => model.NumOfRoom)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="seven wide field column">
+                    <input asp-for="NumOfRoom" class="num-of-bed" type="number" value="@Model.NumOfRoom" min=@Model.NumOfRoom max=20 autocomplete="off">
+                </div>
+                <div class="six wide field column">
+                    <label>
+                    </label>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-NumOfRoom-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Area">
+                        @Localizer[@Html.DisplayNameFor(model => model.Area)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="seven wide field column">
+                    <input asp-for="Area" type="text" value="@Model.Area" autocomplete="off">
+                </div>
+                <div class="six wide field column">
+                    <label>
+                        m<sup>2</sup>
+                    </label>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Area-error"></div>
+                </div>
+
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="NumOfPer">
+                        @Localizer[@Html.DisplayNameFor(model => model.NumOfPer)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="seven wide field column">
+                    <input asp-for="NumOfPer" type="text" value="@Model.NumOfPer" autocomplete="off">
+                </div>
+                <div class="six wide field column">
+                    <label>
+                        @Localizer["Person"]
+                    </label>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-NumOfPer-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Cost">
+                        @Localizer[@Html.DisplayNameFor(model => model.Cost)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="seven wide field column">
+                    <input asp-for="Cost" type="text" value="@Model.Cost" autocomplete="off">
+                </div>
+                <div class="six wide field column">
+                    <label>
+                        VND
+                    </label>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Cost-error"></div>
+                </div>
+            </div>
+
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Description">
+                        @Localizer[@Html.DisplayNameFor(model => model.Description)]
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <textarea asp-for="Description" name="Description" maxlength="500"></textarea>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="ten wide field column">
+                    @Html.ValidationMessageFor(x => x.Description, "")
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="ImageLinks">
+                        @Localizer[@Html.DisplayNameFor(model => model.ImageLinks)]
+                    </label>
+                </div>
+                <div class="thirteen wide field column img-hotel-branch">
+                    <div class="img-div">
+                        <img class="img-add" id="imgAdder" src="@func.GetPrefixUrlByStaticUrl(this.Url, "~/img/img-add.jpg")" />
+                    </div>
+                    <input type="file" name="imageUploader" value="" multiple id="imageUploader">
+                    <div id="imgViewer">
+                        @foreach (var img in Model.ImageLinks)
+                        {
+                            <div class="img-container img-div">
+                                <img class="img-div img-add img-add-hotel img-count" id="@img" src="@func.GetPrefixUrlByStaticUrl(this.Url, "~/img/"+img)" /><input type="button" value="Xóa" class="remove-image">
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="three wide field column"></div>
+                <div class="ten wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Description-error"></div>
+                </div>
+            </div>
+        </div>
+        <div></div>
+        <div class="ui fluid accordion simple">
+            <div class="title hs-hover-pointer">
+                <i class="dropdown icon"></i>
+                <label class="hs-label-page-header">
+                    @Localizer["OpenConvenient"]
+                </label>
+            </div>
+
+            <div class="content">
+                @foreach (var convenientType in convenientTypes)
+                {
+                    <div class="row inline fields convenient-type-padding">
+                        <div class="sixteen wide field column">
+                            <label>
+                                @convenientType.ConvenientTypeName
+                            </label>
+                        </div>
+                    </div>
+                                    <div class="ui divider"></div>
+                                    <div class="row inline fields  convenient-padding">
+                                        @foreach (var convenient in convenients)
+                                        {
+                                            if (convenient.ConvenientTypeId == convenientType.ConvenientTypeId)
+                                            {
+                        <div class="five wide field column">
+                            <label>
+                                @if (Model.ConvenientId.Contains(convenient.ConvenientId))
+                                {
+                                    <input type="checkbox" class="hs-checkbox checked-covenient" checked id="@convenient.ConvenientId" />
+                                }
+                                else { 
+                                    <input type="checkbox" class="hs-checkbox checked-covenient" id="@convenient.ConvenientId" />
+                                }
+                                @convenient.ConvenientName
+                            </label>
+                        </div>}
+
+                }
+                                    </div>}
+            </div>
+        </div>
+        <div class="ui fluid accordion simple">
+            <div class="title hs-hover-pointer">
+                <i class="dropdown icon"></i>
+                <label class="hs-label-page-header">
+                    @Localizer["OpenBed"]
+                </label>
+            </div>
+            <div class="content">
+                <div class="row inline fields">
+                    <table class="ui celled selectable striped table table-add-convenient-room wh-data-table" id="tableBeds" style="width: 100%;" aria-describedby="listDescription">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["BedName"]</th>
+                                <th>@Localizer["Number"]</th>
+                            </tr>
+                            @foreach (var bed in beds)
+                            {
+                                var numberBed = 0;
+                                {
+                                    foreach (var item in Model.BedNumber)
+                                    {
+                                        var roomBed = item.Split('-');
+                                        if (bed.BedId == int.Parse(roomBed[0]))
+                                            numberBed = int.Parse(roomBed[1]);
+                                    }
+                                }
+                                    <tr>
+                                        <td>@bed.BedType</td>
+                                        <td>
+                                            <input id="bed-@bed.BedId" type="number" value="@numberBed" min=0 max=20 class="bed-count num-of-bed" autocomplete="off" />
+                                        </td>
+                                    </tr>
+                            }
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="hs-buttons">
+            <input type="button" id="btnSubmit" class="ui pink button hs-button" value="@Localizer["Update"]" />
+            <a id="btnCancel" class="ui pink button hs-button">@Localizer["btn_cancel"]</a>
+        </div>
+    </form>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        RoomTypeController.Update.Init();
+    </script>
+}
+
+

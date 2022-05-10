@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum; 
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.Repository.Models.HotelBranchQueryModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["HotelBrachs"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <div class="ui form hs-form">
+        <div class="ui two column stackable grid">
+            <div class="fourteen wide large screen thirteen wide computer twelve wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields change-range">
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label class="sch-form-field-label">
+                                    @Localizer["txt_hotelbranch_code"]
+                                </label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input id="txt_hotelbranch_code" type="text" maxlength="50" autocomplete="off"  />
+                            </div>
+                        </div>
+
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label class="sch-form-field-label">
+                                    @Localizer["txt_hotelbranch_name"]
+                                </label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input  id="txt_hotelbranch_name" type="text" maxlength="50" autocomplete="off"  />
+                            </div>
+                        </div>
+                        <div class="six wide field">
+                        </div>
+                    </div>
+                    <div class="row inline fields change-range">
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label>@Localizer["txt_hotel_address"]</label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input id="txt_hotel_address" type="text" maxlength="50" autocomplete="off" />
+                            </div>
+                        </div>
+
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label>@Localizer["hotel_status"]</label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <select asp-items="Html.GetEnumSelectList<HotelBranchStatus>()" id="hotel_status" class="ui fluid dropdown" name="dropHall"></select>
+                            </div>
+                        </div>
+                        <div class="six wide field">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="two wide large screen three wide computer four wide tablet column bottom aligned">
+                <div class="ui stackable grid">
+                    <div class="row inline fields row-change-range">
+                        <div class="hs-buttons btn-change-range">
+                            <input type="button" id="btnSearch" class="ui yellow button" value="@Localizer["Search"]" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui divider">
+</div>
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+    <div class="ui stackable menu hs-action-links hs-gray">
+        <a class="a item" id="add-hotel-branch" href="@func.GetPrefixUrlByControllerAction(this.Url,"GetInsert","HotelBranchs")">
+            <i class="plus square outline icon" aria-hidden="true"></i>
+            @Localizer["AddHotelBranchs"]
+        </a>
+    </div>
+    <table class="ui celled selectable striped table wh-data-table" id="tableHotelBranchs" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["txt_hotelbranch_code"]</th>
+                <th>@Localizer["txt_hotelbranch_name"]</th>
+                <th>@Localizer["txt_hotel_address"]</th>
+                <th>@Localizer["hotel_status"]</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        HotelBranchsController.Index.statusEnum = JSON.parse(
+        '@Html.Raw(Json.Serialize(HoangNV.HotelBooking.Web.Utils.Utility.GetEnumDisplay<HotelBranchStatus>(_sharedLocalizer)))');
+        HotelBranchsController.Index.urlAction="@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "HotelBranchs")";
+        HotelBranchsController.Index.Init();
+    </script>
+}

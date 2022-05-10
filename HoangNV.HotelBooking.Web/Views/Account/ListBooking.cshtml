@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@using HoangNV.HotelBooking.Repository.Enum
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.BookingViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="row">
+    <div class="col-12" style="margin: 2rem;">
+        <h2 style="font-weight: bold;">Danh sách đơn đặt phòng của bạn</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2" style="text-align: center;font-size: 15px;padding-top: 8px;font-weight: 600;">
+        <label>
+            Thời gian đến/đi:
+        </label>
+    </div>
+    <div class="col-2">
+        <div class="ui calendar" id="startDateCalendar">
+            <div class="ui input right icon calendar-expand">
+                <input type="text" autocomplete="off" value="@DateTime.MinValue" id="startDate">
+                <i class="calendar icon" aria-hidden="true"></i>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-1" style="margin-right: -6rem;padding-top: 8px;font-weight: 900;">~</div>
+    <div class="col-2">
+        <div class="ui calendar" id="endDateCalendar">
+            <div class="ui input right icon calendar-expand">
+                <input type="text" autocomplete="off" value="@DateTime.MaxValue" id="endDate">
+                <i class="calendar icon" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-2">
+        <input type="button" id="btnSearch" class="ui yellow button" value="Tìm kiếm" autocomplete="off" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" style="margin: 3rem; max-width: 92%">
+        <table class="table-bordered border-dark ui celled selectable striped table wh-data-table" id="tableExitConfig" style="width: 100%;" aria-describedby="listDescription">
+            <thead>
+                <tr>
+                    <th>Mã đặt phòng</th>
+                    <th>Ngày đến</th>
+                    <th>Ngày đi</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        AccountBooking.Index.statusEnum = JSON.parse(
+        '@Html.Raw(Json.Serialize(HoangNV.HotelBooking.Web.Utils.Utility.GetEnumDisplay<StatusBookingRoomEnum> (_sharedLocalizer)))');
+        AccountBooking.Index.urlAction = "@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "Account")";
+        AccountBooking.Index.Init();
+    </script>
+}

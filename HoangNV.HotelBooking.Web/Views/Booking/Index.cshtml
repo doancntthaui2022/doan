@@ -1,0 +1,395 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.BusinessLogic.Models.RoomBookClientViewModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listRoomType = ViewData["RoomType"] as IEnumerable<RoomTypeViewModel>;
+}
+
+@section Stylesheets{
+
+<style>
+    .header {
+        position: relative;
+    }
+
+    .col-6.style-modal {
+        font-size: 1.3rem;
+        margin-top: 1rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    .main_form_2 {
+        padding: 0px 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        border-radius: 25px;
+        width: 100%;
+        max-height: 50%;
+    }
+
+    .icon-style {
+        float: left;
+        padding-right: 1rem;
+    }
+
+    .book_n {
+        border: 1px solid rgba(34,36,38,.15);
+        border-radius: 18px !important;
+        background-color: #eeeeee !important;
+        width: 100%;
+        font-size: 19px !important;
+        height: auto;
+        line-height: normal;
+        padding: 10px 20px !important;
+        -webkit-appearance: none !important;
+    }
+
+    .room-list-item {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid;
+    }
+
+    .hr-center hr {
+        height: 10px !important;
+    }
+</style>
+}
+
+<div class="content-booking">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="color: red;font-size: 1rem;font-weight: 500;">
+                (Tìm kiếm và chọn số phòng bạn muốn đặt và ấn đặt phòng)
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-3 search-booking">
+                <form action="/Booking" method="get">
+                    <div class="center-search">Tìm kiếm</div>
+                    <hr />
+                    <div class="col-12">
+                        <label class="date">Ngày nhận phòng</label>
+                        <div class="ui calendar" id="start_date">
+                            <div class="ui input right icon">
+                                <i class="calendar icon"></i>
+                                <input class="book_n" type="text" name="startDate" value="@ViewBag.StartDate" placeholder="dd/MM/yyyy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="date">Ngày trả phòng</label>
+                        <div class="ui calendar" id="end_date">
+                            <div class="ui input right icon calendar-expand">
+                                <i class="calendar icon"></i>
+                                <input class="book_n" type="text" name="endDate" value="@ViewBag.EndDate" placeholder="dd/MM/yyyy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="date">Số người</label>
+                        <input class="book_n" min="0" maxlength="5" name="numOfPer" placeholder="0" value="@ViewBag.NumOfPer" type="number">
+                    </div>
+                    <div class="col-12" style="text-align:center">
+                        <button class="book_btn" type="submit">Tìm kiếm</button>
+                    </div>
+                </form>
+                <hr />
+                <div style="text-align:center">
+                    <button class="book_btn" style="text-align:center" id="bookingConfirm" type="button">Đặt phòng</button>
+                </div>
+
+            </div>
+
+            <div class="col-9">
+                <script>var arrID = {};</script>
+                @if (ViewBag.Count == 0)
+                {
+                    <div class="col-12" style="text-align: center; font-size: 2rem; margin-top: 2em;">
+                        Không tìm thấy phòng trống phù hợp. Vui lòng liên hệ với nhân viên để được tư vấn thêm!
+                    </div>
+                }
+                <form action="/Booking/DetailBooking" method="get">
+                @for (var i = 0; i < ViewBag.Count; i++)
+                {
+                    var item = (Model.ElementAt(i));
+                    <div class="room-list-item">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <figure class="gradient-overlay-hover link-icon">
+                                    @foreach (var img in item.ImageLinks)
+                                    {
+                                        <img src="~/img/@img" alt="#" />
+                                        break;
+                                    }
+                                </figure>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="room-info">
+                                    <h3 class="room-title text-dark" style="margin-bottom: 13px;">
+                                        <a data-toggle="modal" data-target="#@item.RoomTypeId" style="color:black; cursor:pointer;">@item.RoomTypeName</a>
+                                    </h3>
+
+                                    <p>Số người ở tối đa: @item.NumOfPer người</p>
+                                    <p>Số phòng còn trống: @item.NumOfRoom<p>
+                                        <h4>Giá phòng: @item.Cost.Value.ToString("N0") VNĐ/Ngày</h4>
+                                        <input value="@item.Cost.Value" name="CostTotal"  style="display:none" /> 
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="room-price">
+                                    <b>Số lượng phòng cần đặt</b>
+                                    <input name="RoomTypeId" value="@item.RoomTypeId" style="display:none" />
+                                    <select class="form-select numberRoom" name="NumOfRoom" id="numberRoom-@item.RoomTypeId">
+                                        @for (int j = 0; j <= item.NumOfRoom; j++)
+                                        {
+                                            <option value="@j" class="text-dark">@j</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <input name="CheckInTime" id="CheckInTimeValue" value="@ViewBag.StartDate" style="display:none"/>
+                <input name="CheckOutTime" id="CheckOutTimeValue" value="@ViewBag.EndDate" style="display:none"/>
+                <button style="display:none" type="submit" id="btn_submit_booking"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-3"></div>
+    <div class="row">
+        <div class="hr-center" style="text-align:center">
+            <hr />
+        </div>
+    </div>
+    <div class="col-3"></div>
+</div>
+@for (var i = 0; i < ViewBag.Count; i++)
+{
+    var item = (Model.ElementAt(i));
+    <!-- Modal -->
+    <div class="modal fade" id="@item.RoomTypeId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLongTitle">@item.RoomTypeName</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var roomType in listRoomType)
+                    {
+
+                        if (item.RoomTypeId == roomType.RoomTypeId)
+                        {
+                            var dem = 0;
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div id="myCarousel-@item.RoomTypeId" class="main_form_2 carousel slide testimonial_Carousel " data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @foreach (var img in roomType.ImageLinks)
+                                                {
+                                                    if (dem == 0)
+                                                    {
+                                                        <div class="carousel-item  active">
+                                                            <div class="container">
+                                                                <div class="carousel-caption">
+                                                                    <img src="~/img/@img" alt="#" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <div class="carousel-item ">
+                                                            <div class="container">
+                                                                <div class="carousel-caption">
+                                                                    <img src="~/img/@img" alt="#" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    dem++;
+                                                    <a class="carousel-control-prev" href="#myCarousel-@item.RoomTypeId" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#myCarousel-@item.RoomTypeId" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                    <script>
+                                                        var myCarousel_2 = document.querySelector('#myCarousel-@item.RoomTypeId');
+                                                        var carousel = new bootstrap.Carousel(myCarousel_2, {
+                                                            interval: 1500,
+                                                            wrap: false
+                                                        })
+                                                    </script>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-6 style-modal"><h2 class="icon-style"><i class="bi bi-cash"></i></h2> : <span id="roomCode-@item.RoomTypeId">@roomType.Cost.Value.ToString("N0")</span> VNĐ/Ngày</div>
+                                            <div class="col-6 style-modal"><h2 class="icon-style"><i class="bi bi-house"></i></h2> : @roomType.Area m<sup>2</sup></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 style-modal"><h2 class="icon-style"><i class="bi bi-person-fill"></i></h2> : @item.NumOfPer người</div>
+                                            @{
+                                                var d = 0;
+                                            }
+                                            @foreach (var bed in roomType.BedNumber)
+                                            {
+                                                if (d == 0)
+                                                {
+                                                    <div class="col-6 style-modal"><h2 class="icon-style"><i class="bi bi-moon-stars"></i></h2> : @bed</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-6 style-modal"></div>
+                                                    <div class="col-6 style-modal"><h2 class="icon-style"><i class="bi bi-moon-stars"></i></h2> : @bed</div>
+                                                }
+                                                d++;
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row" style="margin-top: 1rem; margin-bottom: 1rem;">
+                                    <div class="col-12" style="font-size: 2rem; font-weight: 700;">Tiện ích</div>
+
+                                </div>
+                                <div class="row">
+                                    @foreach (var convenient in roomType.ConvenientName)
+                                    {
+                                        <div class="col-4"><h2 class="icon-style" style="font-size: 1rem;font-weight: 100;font-size: 17px;margin-bottom: 0.8rem;"><i class="bi bi-check2"></i>@convenient</h2></div>
+                                    }
+                                </div>
+                                <hr />
+                                <div class="row" style="margin-top: 1rem; margin-bottom: 1rem;">
+                                    <div class="col-12" style="font-size: 2rem; font-weight: 700;">Mô tả</div>
+
+                                </div>
+                                <div class="row" style="margin-top: 1rem; margin-bottom: 1rem;">
+                                    <div class="col-12" style="font-size: 1.3rem;font-weight: 400;">@roomType.Description</div>
+
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="testimonial">
+    <partial name="~/Views/Shared/_testimonialLayout.cshtml" view-data="ViewData" />
+</div>
+
+@section Scripts{
+<script>
+    $("#start_date").calendar({
+        type: 'date',
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate() + '';
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
+                var month = (date.getMonth() + 1) + '';
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+                var year = date.getFullYear();
+                return day + '/' + month + '/' + year;
+            }
+        },
+        className: {
+            table: 'ui celled center aligned unstackable table',
+        },
+        text: {
+            days: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            monthsShort: ['Th.1', 'Th.2', 'Th.3', 'Th.4', 'Th.5', 'Th.6', 'Th.7', 'Th.8', 'Th.9', 'Th.10', 'Th.11', 'Th.12'],
+            today: 'Hôm nay',
+            now: 'Hiện tại',
+        },
+        firstDayOfWeek: 1,
+        endCalendar: $('#end_date'),
+        minDate: new Date(),
+    });
+    $("#end_date").calendar({
+        type: 'date',
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate() + '';
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
+                var month = (date.getMonth() + 1) + '';
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+                var year = date.getFullYear();
+                return day + '/' + month + '/' + year;
+            }
+        },
+        text: {
+            days: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            months: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            monthsShort: ['Th.1', 'Th.2', 'Th.3', 'Th.4', 'Th.5', 'Th.6', 'Th.7', 'Th.8', 'Th.9', 'Th.10', 'Th.11', 'Th.12'],
+            today: 'Hôm nay',
+            now: 'Hiện tại',
+        },
+        className: {
+            table: 'ui celled center aligned unstackable table',
+        },
+        startCalendar: $('#start_date'),
+        firstDayOfWeek: 1,
+        minDate: new Date(),
+    });
+    var myCarousel = document.querySelector('#myCarousel')
+    var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 2000,
+        wrap: false
+    })
+    $("#bookingConfirm").on('click',function(){
+        var listItem =$("select[name=NumOfRoom]");
+        var sumRoom=0;
+        $.each(listItem, function(key,value){
+            sumRoom+=$(value).val();
+        })
+        if(sumRoom==0)
+        {
+            alert("Bạn chưa chọn phòng!");
+        }
+        else{
+            $("#btn_submit_booking").click();
+        }
+        
+    })
+</script>
+}

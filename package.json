@@ -1,0 +1,31 @@
+{
+  "name": "hoangnv.hotelbooking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/nguyenhoangcntthaui/hotelbooking.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/nguyenhoangcntthaui/hotelbooking/issues"
+  },
+  "homepage": "https://gitlab.com/nguyenhoangcntthaui/hotelbooking#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "dart-sass": "^1.25.0",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-terser": "^2.1.0",
+    "sass": "^1.49.9"
+  }
+}

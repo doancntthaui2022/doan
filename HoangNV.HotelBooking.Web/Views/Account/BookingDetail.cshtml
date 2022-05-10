@@ -1,0 +1,140 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using HoangNV.HotelBooking.BusinessLogic.Models
+@using HoangNV.HotelBooking.Repository.Enum
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.BookingConfirmClientViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listRoomType = ViewData["RoomType"] as IEnumerable<RoomTypeViewModel>;
+    var dateInOut = Model.CheckOutTime.Day - Model.CheckInTime.Day + 1;
+    var status=HoangNV.HotelBooking.Web.Utils.Utility.GetEnumDisplay<StatusBookingRoomEnum> (_sharedLocalizer);
+    }
+@section Stylesheets{
+
+    <style>
+        .booking-details {
+            padding: 1rem;
+            margin: 2rem;
+            border: 1px solid #c1c1c1;
+            border-radius: 7px;
+        }
+        .bold-size {
+            font-size: 15px;
+        }
+
+    </style>
+}
+<div class="row">
+    <div class="col-12" style="margin-top: 2rem; margin-left: 2rem;">
+        <h2 style="font-weight: bold;">Chi tiết đơn đặt hàng</h2>
+    </div>
+</div>
+
+<div class="row booking-details">
+    <div class="col-12">
+        <h3>Chi tiết đặt phòng của bạn</h3>
+        <hr style="max-width: 31%;" />
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-12">
+            <b>Mã đặt phòng:</b> @Model.BookingId
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-12">
+            <b>Người đặt phòng:</b> @Model.CustomerName
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-4">
+            <b>Số điện thoại:</b> @Model.PhoneNumber
+        </div>
+        <div class="bold-size col-6">
+            <b>Email:</b> @Model.Email
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 21px;">
+        <div class="bold-size col-4">
+            <b>Người nhận phòng:</b> @Model.CheckInPersonName
+        </div>
+        <div class="bold-size col-6">
+            <b>CMND người nhận phòng:</b> @Model.CheckInPersonCode
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-4">
+            <b>Nhận phòng:</b> @Model.CheckInTime.ToString("dd/MM/yyyy")
+            <label name="CheckInTime" value="@Model.CheckInTime"></label>
+        </div>
+        <div class="col-4">
+            <b>Trả phòng:</b> @Model.CheckOutTime.ToString("dd/MM/yyyy")
+            <label name="CheckOutTime" value="@Model.CheckOutTime"></label>
+        </div>
+        <div class="col-4">
+            <b>(Tổng số ngày ở: @dateInOut ngày)</b>
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-12">
+            <b>Trạng thái đơn đặt phòng: </b> <span style="background-color: #f6f715;padding-top: 0.2rem;padding-bottom: 0.2rem;padding-left: 1rem;padding-right: 1rem;border-radius: 37px;">@status[Model.StatusBooking]</span> 
+        </div>
+    </div>
+    <div class="row bold-size" style="margin-bottom: 21px;">
+        <div class="col-12">
+            <b>Tổng tiền: </b> @Model.SumCost.ToString("N0") VNĐ
+        </div>
+    </div>
+    <div class="col-12">
+        <h3>Danh sách các phòng đã đặt</h3>
+        <hr style="max-width: 31%;" />
+    </div>
+    <table  style="width: 50%;" class="table table-bordered border-dark table-striped table-hover" >
+        <thead style="border:1px solid">
+            <tr>
+            <th>Tên phòng</th>
+            <th>Số lượng</th>
+            <th>Giá tiền (VNĐ/Ngày)</th>
+            <th>Tổng</th>
+        </tr>
+        </thead>
+        <tbody  style="border:1px solid">
+            @for (var j = 0; j < Model.RoomTypeName.Count; j++)
+           {
+               <tr>
+                    <td>@Model.RoomTypeName[j]</td>
+                    <td>@Model.NumOfOrder[j]</td>
+                    <td>@Model.Cost[j].ToString("N0")</td>
+                    <td>@{
+                            var sum = Model.NumOfOrder[j] * Model.Cost[j];
+                        }@sum.ToString("N0")</td>
+                </tr>
+           }    
+           <tr><th style="text-align:center" colspan=3>
+               Tổng giá tiền
+           </th>
+           <td>@Model.SumCost.ToString("N0")</td></tr>
+        </tbody>
+    </table>
+    <div class="col-12">
+        <div><h4>Mã các phòng</h4></div>
+        <ul>
+            @{
+                var i = 0;
+            }
+            @foreach (var item in Model.RoomCode)
+            {
+                i++;
+                <li class="bold-size"><b>@i. @item</b></li>
+            }
+        </ul>
+    </div>
+    <div class="col-12" style="color:red">(Mã phòng sẽ được kiểm tra và gửi lại thẻ phòng cho khách hàng khi khách hàng đến nhận phòng)</div>
+</div>
+
+<div class="row btn-submit" style="text-align:right">
+    <div class="col-1" style="margin-left: 3rem;"><button type="button" style="padding-left: 1.5rem;padding-top: 0.5rem;padding-right: 1.5rem;color: white;background-color: #0001e4;border: 1px solid;border-radius: 52px;padding-bottom: 0.5rem;" class="btn-submit-conf" onclick="@("window.location.href='" + @Url.Action("ListBooking", "Account") + "'");">Quay lại</button></div>
+</div>

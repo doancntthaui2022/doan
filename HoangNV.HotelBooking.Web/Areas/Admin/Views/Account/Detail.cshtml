@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using HoangNV.HotelBooking.BusinessLogic.Enum;
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model HoangNV.HotelBooking.BusinessLogic.Models.UserUpdateViewModel
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Thêm mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+
+<h1 class="ui header monsin-title hs-title-booking">@Localizer["InserUser"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <form class="ui form hs-form" enctype="multipart/form-data">
+        <div class="ui stackable grid padding-row-inline">
+            <input asp-for="UserId" maxlength="50" style="display:none" type="text" autocomplete="off">
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="UserName">
+                        @Localizer[@Html.DisplayNameFor(model => model.UserName)]
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="UserName" maxlength="50" readonly style="background-color: aqua;" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-UserName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="FullName">
+                        @Localizer[@Html.DisplayNameFor(model => model.FullName)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="FullName" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-FullName-error"></div>
+                </div>
+            </div>
+            <div class="row inline fields">
+                <div class="three wide field column">
+                    <label asp-for="Email">
+                        @Localizer[@Html.DisplayNameFor(model => model.Email)] <span class="hs-text-red">*</span>
+                    </label>
+                </div>
+                <div class="thirteen wide field column">
+                    <input asp-for="Email" maxlength="50" type="text" autocomplete="off">
+                </div>
+                <div class="three wide field column"></div>
+                <div class="thirteen wide field column">
+                    <div class="hs-text-red hs-error hs-error-text" id="txt-Email-error"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ui divider"></div>
+        <div class="hs-buttons">
+            <input type="button" id="btnSubmit" class="ui pink button hs-button" value="@Localizer["Add"]" />
+            <a id="btnCancel" class="ui pink button hs-button">@Localizer["btn_cancel"]</a>
+        </div>
+    </form>
+</div>
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        AccountController.Detail.Init();
+    </script>
+}
+
+

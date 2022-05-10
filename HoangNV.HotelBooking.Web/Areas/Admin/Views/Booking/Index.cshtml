@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@using HoangNV.HotelBooking.Repository.Enum;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.BusinessLogic.Models.RoomBookViewModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["Booking"]</h1>
+<div class="padding-button-header">
+    <button class="ui mini button blue left" id="btn-pre-page">
+        <i class="angle left large icon"></i>
+    </button>
+    <button class="ui mini button blue right" id="btn-next-page">
+        <i class="angle right large icon"></i>
+    </button>
+</div>
+<div class="ui segment hs-gray fix-margin-segment">
+    <div class="ui form hs-form">
+        <div class="ui two column stackable grid">
+            <div class="fourteen wide large screen thirteen wide computer twelve wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields change-range">
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label>
+                                    @Localizer["checkInDate"]
+                                </label>
+                            </div>
+                            <div class="thirteen wide column field">
+                                <div class="ui calendar" id="startDateCalendar">
+                                    <div class="ui input right icon calendar-expand">
+                                        <input type="text" autocomplete="off" value="@DateTime.Today" id="startDate">
+                                        <i class="calendar icon" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column field eight wide">
+                            <div class="four wide field column">
+                                <label @*style="margin:auto"*@>
+                                    ~
+                                </label>
+                            </div>
+                            <div class="thirteen field wide column">
+                                <div class="ui calendar" id="endDateCalendar">
+                                    <div class="ui input right icon calendar-expand">
+                                        <input type="text" autocomplete="off" value="@DateTime.Today" id="endDate">
+                                        <i class="calendar icon" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row inline fields change-range">
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label class="sch-form-field-label">
+                                    @Localizer["NumOfPerson"]
+                                </label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input id="perNum" type="text" autocomplete="off" />
+                            </div>
+                        </div>
+
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label class="sch-form-field-label">
+                                    @Localizer["CostNumber"]
+                                </label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input id="costNum" type="text" maxlength="50" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="six wide field">
+                        </div>
+                    </div>
+                    <div class="row inline fields change-range">
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+                                <label>@Localizer["Area"]</label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <input id="area" type="text" maxlength="50" autocomplete="off" />
+                            </div>
+                        </div>
+
+                        <div class=" column field eight wide">
+                            <div class="four wide field column">
+
+                                <label>@Localizer["RoomType"]</label>
+                            </div>
+                            <div class="thirteen wide field column">
+                                <select asp-items="ViewBag.RoomTypes" id="roomTypeId" class="ui fluid dropdown" name="dropHall"></select>
+                            </div>
+                        </div>
+                        <div class="six wide field">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide large screen three wide computer four wide tablet column bottom aligned">
+                <div class="ui stackable grid">
+                    <div class="row inline fields row-change-range">
+                        <div class="hs-buttons btn-change-range">
+                            <input type="button" id="btnSearch" class="ui yellow button" value="@Localizer["Search"]" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui divider">
+</div>
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+    <div class="ui parent-input">
+
+        <div class="ui stackable menu hs-action-links hs-gray">
+            <a class="a item" id="add-booking">
+                <i class="plus square outline icon" aria-hidden="true"></i>
+                @Localizer["AddBooking"]
+            </a>
+        </div>
+    </div>
+
+    <table class="ui celled selectable striped table wh-data-table" id="tableRooms" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["RoomCode"]</th>
+                <th>@Localizer["Cost"]</th>
+                <th>@Localizer["Area"]</th>
+                <th>@Localizer["NumOfPerson"]</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        $("#btn-next-page").on('click', function () {
+            RedirectToPage("/Admin/Booking/ConfirmBooking")
+        })
+        $("#btn-pre-page").on('click', function () {
+            RedirectToPage("/Admin/Booking/ExitDetail")
+        })
+        BookingRoomController.Index.urlAction="@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "Booking")";
+        BookingRoomController.Index.Init();
+    </script>
+}

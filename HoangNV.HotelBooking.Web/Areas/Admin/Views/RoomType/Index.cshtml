@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<HoangNV.HotelBooking.Web.Localization.SharedResource> _sharedLocalizer
+@model IEnumerable<HoangNV.HotelBooking.BusinessLogic.Models.RoomTypeViewModel>
+@addTagHelper "*, HoangNV.HotelBooking.Web"
+
+@{ ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+<h1 class="ui header monsin-title hs-title-result" id="listDescription">@Localizer["RoomTypeView"]</h1>
+<div class="ui segment hs-gray fix-margin-segment">
+    <div class="ui form hs-form">
+        <div class="ui two column stackable grid">
+            <div class="fourteen wide large screen thirteen wide computer twelve wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields change-range">
+                        <div class="three wide large screen three wide computer four wide tablet field column">
+                            <label>
+                                @Localizer["RoomTypeCode"]
+                            </label>
+                        </div>
+                        <div class="thirteen wide large screen thirteen wide computer twelve wide tablet field column">
+                            <input id="txtRoomTypeCode" type="text" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row inline fields change-range">
+                        <div class="three wide large screen field column">
+                            <label>
+                                @Localizer["RoomTypeName"]
+                            </label>
+                        </div>
+                        <div class="thirteen wide large screen thirteen wide computer twelve wide tablet field column">
+                            <input id="txtRoomTypeName" type="text" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide large screen three wide computer four wide tablet column">
+                <div class="ui stackable grid">
+                    <div class="row inline fields row-change-range">
+                        <div class="column field hs-b004-btn-search btn-change-range">
+                            <input type="button" id="btnSearch" class="ui yellow button fluid " value="@Localizer["Search"]" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui divider">
+</div>
+<div class="ui segment fluid wh-over-flow hs-gray hs-table-result">
+    <div class="ui stackable menu hs-action-links hs-gray">
+        <a class="a item" id="add-room-type">
+            <i class="plus square outline icon" aria-hidden="true"></i>
+            @Localizer["AddRoomTypes"]
+        </a>
+    </div>
+    <table class="ui celled selectable striped table wh-data-table" id="tableRoomType" style="width: 100%;" aria-describedby="listDescription">
+        <thead>
+            <tr>
+                <th>@Localizer["RoomTypeCode"]</th>
+                <th>@Localizer["RoomTypeName"]</th>
+                <th>@Localizer["Cost"]</th>
+                <th>@Localizer["NumOfRoom"]</th>
+                <th>@Localizer["NumOfPer"]</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<resources names='new[] { "Localization.SharedResource"}'></resources>
+@section Scripts{
+    <script>
+        RoomTypeController.Index.urlAction="@func.GetPrefixUrlByControllerAction(this.Url, "GetList", "RoomType")";
+        RoomTypeController.Index.Init();
+    </script>
+}
